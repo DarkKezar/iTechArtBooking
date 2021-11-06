@@ -1,9 +1,10 @@
 ﻿using Core.Models;
-using Infrastucture.Repositories.Fake;
+using Infrastucture.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,11 +14,16 @@ namespace iTechArtBooking.Web.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
+        [HttpPost]
+        public bool Add([Required]int hotelId, [Required]string name, uint cost)
+        {
+            return RoomRepository.Add(hotelId, name, cost);
+        }
 
         [HttpGet]
-        public List<Room> Get(int HotelId = -1)
+        public Room Get([Required]int id)
         {
-            return FakeRoomRepository.Get(HotelId);
+            return RoomRepository.GetById(id);
         }
     }
 }

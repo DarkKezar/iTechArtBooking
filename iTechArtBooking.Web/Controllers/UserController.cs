@@ -1,5 +1,4 @@
 ﻿using Core.Models;
-using Infrastucture.Repositories.Fake;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,7 +16,7 @@ namespace iTechArtBooking.Web.Controllers
         [HttpGet]
         public User Get(int UserId)
         {
-            return FakeUserRepository.Get(UserId);
+            return new Core.Models.User();
         }
     }
 }

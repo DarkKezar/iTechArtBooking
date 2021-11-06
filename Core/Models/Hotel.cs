@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.Models
@@ -10,7 +11,6 @@ namespace Core.Models
     {
         public long Id { get; set; }
         public string Name { get; set; }
-
         public List<Room> Rooms { get; set; }
 
         //TO ADD:

@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using Infrastucture.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,13 +11,13 @@ namespace iTechArtBooking.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookedController : ControllerBase
+    public class HotelsController : ControllerBase
     {
 
         [HttpGet]
-        public List<Booked> Get(int RoomId)
+        public List<Hotel> Get(int count = 1, int from = 1)
         {
-            return new List<Booked>();
+            return HotelRepository.GetAll(count, from);
         }
     }
 }
