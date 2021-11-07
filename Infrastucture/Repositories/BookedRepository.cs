@@ -13,16 +13,22 @@ namespace Infrastucture.Repositories
         {
             using(var db = new BookingContext())
             {
-                var User = db.Users.First(b => b.Id == userId);
-                var Room = db.Rooms.First(b => b.Id == roomId);
+                var User = db.Users.Where(b => b.Id == userId).ToList();
+                var Room = db.Rooms.Where(b => b.Id == roomId).ToList();
 
-                if (User == null || Room == null) return false;
+                if (User.Count() == 0 || Room.Count() == 0) return false;
                 var AlreadyBooked = db.Booked
                                         .Where(b => b.Date >= date 
                                                  && b.Date <= date.AddDays(period))
                                         .ToList();
                 if (AlreadyBooked.Count() != 0) return false;
-                var Booked = new Booked { Room = Room, User = User, Date = date, Period = period };
+                var Booked = new Booked 
+                { 
+                    Room = Room[0], 
+                    User = User[0], 
+                    Date = date, 
+                    Period = period 
+                };
 
                 db.Booked.Add(Booked);
                 db.SaveChanges();
