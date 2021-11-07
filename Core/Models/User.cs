@@ -11,6 +11,7 @@ namespace Core.Models
     {
         //public long Id { get; set; } 
         //Is is in Identity
+        public new int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

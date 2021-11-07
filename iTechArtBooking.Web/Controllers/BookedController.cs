@@ -17,7 +17,7 @@ namespace iTechArtBooking.Web.Controllers
 
         [HttpPost]
         public bool Add([Required] int roomId, 
-                        [Required] string userId, 
+                        [Required] int userId, 
                         [Required] DateTime date, 
                         [Required] SByte period)
         {
@@ -31,7 +31,7 @@ namespace iTechArtBooking.Web.Controllers
         }
 
         [HttpGet]
-        public List<Booked> Get([Required]string userId)
+        public List<Booked> Get([Required]int userId)
         {
             return BookedRepository.GetAll(userId);
         }

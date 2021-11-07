@@ -9,7 +9,7 @@ namespace Infrastucture.Repositories
 {
     public class BookedRepository
     {
-        public static bool Add(int roomId, string userId, DateTime date, SByte period)
+        public static bool Add(int roomId, int userId, DateTime date, SByte period)
         {
             using(var db = new BookingContext())
             {
@@ -41,7 +41,7 @@ namespace Infrastucture.Repositories
             }
             return true;
         }
-        public static List<Booked> GetAll(string userId)
+        public static List<Booked> GetAll(int userId)
         {
             using(var db = new BookingContext())
             {
