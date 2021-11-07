@@ -1,8 +1,10 @@
 ﻿using Core.Models;
+using Infrastucture.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +15,25 @@ namespace iTechArtBooking.Web.Controllers
     public class BookedController : ControllerBase
     {
 
-        [HttpGet]
-        public List<Booked> Get(int RoomId)
+        [HttpPost]
+        public bool Add([Required] int roomId, 
+                        [Required] string userId, 
+                        [Required] DateTime date, 
+                        [Required] SByte period)
         {
-            return new List<Booked>();
+            return BookedRepository.Add(roomId, userId, date, period);
+        }
+
+        [HttpDelete]
+        public bool Delete([Required] int id)
+        {
+            return BookedRepository.Delete(id);
+        }
+
+        [HttpGet]
+        public List<Booked> Get([Required]string userId)
+        {
+            return BookedRepository.GetAll(userId);
         }
     }
 }
