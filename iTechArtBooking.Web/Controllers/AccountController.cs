@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,13 +12,14 @@ namespace iTechArtBooking.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AccountController : ControllerBase
     {
 
-        [HttpGet]
-        public List<User> Get()
+        [HttpPost]
+        public async Task<bool> Register([Required] RegisterModel model)
         {
-            return UserRepository.GetAll();
+            return await UserRepository.Register(model);
         }
+
     }
 }
