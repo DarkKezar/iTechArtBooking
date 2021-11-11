@@ -13,5 +13,16 @@ namespace Core.Models
         public string UserName;
         public string Email;
         public string Password;
+        public string ConfirmPassword;
     }
 }
+
+/*
+ * {
+"FirstName": "Ilya",
+"LastName": "Yanchilin",
+"UserName": "DarkKezar",
+"Email": "darkkezaring@gmail.com",
+"Password": "_1K2e3z4a5r"
+}
+ */

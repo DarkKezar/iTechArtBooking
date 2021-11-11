@@ -180,7 +180,7 @@ namespace Infrastucture.Migrations
                         .HasForeignKey("RoomId");
 
                     b.HasOne("Core.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Booked")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Room");
@@ -215,6 +215,11 @@ namespace Infrastucture.Migrations
             modelBuilder.Entity("Core.Models.Hotel", b =>
                 {
                     b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("Core.Models.User", b =>
+                {
+                    b.Navigation("Booked");
                 });
 #pragma warning restore 612, 618
         }
