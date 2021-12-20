@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
-        //public long Id { get; set; } 
-        //Is is in Identity
-        public new int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<Booked> Booked { get; set; }
+        public List<Booking> Booking { get; set; }
 
         /*
             IdentityUser fields:

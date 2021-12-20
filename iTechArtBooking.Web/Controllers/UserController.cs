@@ -10,14 +10,21 @@ using System.Threading.Tasks;
 namespace iTechArtBooking.Web.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [Controller]
     public class UserController : ControllerBase
     {
 
-        [HttpGet]
-        public List<User> Get()
+        private UserRepository Repository;
+
+        public UserController()
         {
-            return UserRepository.GetAll();
+            Repository = new UserRepository();
+        }
+
+        [HttpGet]
+        public async Task<List<User>> Get()
+        {
+            return await Repository.Get();
         }
     }
 }

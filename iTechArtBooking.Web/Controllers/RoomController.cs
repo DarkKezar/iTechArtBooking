@@ -8,24 +8,32 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace iTechArtBooking.Web.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RoomController : ControllerBase
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Microsoft.AspNetCore.Components.Route("api/[controller]")]
+    [Controller]
+    public class RoomController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
-        [HttpPost]
-        public bool Add([Required]int hotelId, [Required]string name, uint cost)
+        private RoomRepository Repository;
+
+        public RoomController()
         {
-            return RoomRepository.Add(hotelId, name, cost);
+            Repository = new RoomRepository();
         }
 
-        [HttpGet]
-        public Room Get([Required]int id)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<HttpStatusCodeResult> Add([Required]int hotelId, [Required]string name, uint cost)
         {
-            return RoomRepository.GetById(id);
+            return await Repository.Add(hotelId, name, cost);
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public async Task<Room> Get([Required]int id)
+        {
+            return await Repository.Get(id);
         }
     }
 }

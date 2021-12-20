@@ -1,43 +1,44 @@
 ﻿using Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Infrastucture.Repositories
 {
     public class CommentRepository
     {
 
-        public static bool Add(int hotelId, int userId, string comment, sbyte mark)
+        public async Task<HttpStatusCodeResult> Add(int hotelId, int userId, string comment, byte mark)
         {
             using(var db = new BookingContext())
             {
-                var User = db.Users.Where(u => u.Id == userId).ToList();
-                var Hotel = db.Hotels.Where(h => h.Id == hotelId).ToList();
+                var User = await db.Users.Where(u => u.Id == userId).ToListAsync();
+                var Hotel = await db.Hotels.Where(h => h.Id == hotelId).ToListAsync();
 
-                if (User.Count() == 0 || Hotel.Count() == 0) return false;
-                if (mark < 1 || mark > 5) return false;
-                var Comment = new Comment
+                if (User.Count() == 0 || Hotel.Count() == 0) return new HttpStatusCodeResult(HttpStatusCode.Accepted, "ok"); 
+
+                db.Comments.Add(new Comment
                 {
                     User = User[0],
                     Hotel = Hotel[0],
                     CommentText = comment,
                     Mark = mark
-                };
-
-                db.Comments.Add(Comment);
+                });
                 db.SaveChanges();
             }
-            return true;
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted, "ok"); 
         }
 
-        public static List<Comment> GetAll(int hotelId)
+        public async Task<List<Comment>> Get(int hotelId)
         {
             using(var db = new BookingContext())
             {
-                var Comments = db.Comments.Where(c => c.Hotel.Id == hotelId).ToList();
+                var Comments = await db.Comments.Where(c => c.Hotel.Id == hotelId).ToListAsync();
                 return Comments;
             }
         }

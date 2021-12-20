@@ -12,14 +12,19 @@ namespace iTechArtBooking.Web.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    [ApiController]
+    [Controller]
     public class HotelsController : ControllerBase
     {
+        private HotelRepository Repository;
 
-        [HttpGet]
-        public List<Hotel> Get(int count = 1, int from = 1)
+        public HotelsController()
         {
-            return HotelRepository.GetAll(count, from);
+            Repository = new HotelRepository();
+        }
+        [HttpGet]
+        public async Task<List<Hotel>> Get(int count = 0, int from = 1)
+        {
+            return await Repository.Get(count, from);
         }
     }
 }

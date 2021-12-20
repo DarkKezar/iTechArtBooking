@@ -13,13 +13,14 @@ namespace Infrastucture.Repositories
         public DbSet<Room> Rooms { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
-        public DbSet<Booked> Booked { get; set; }
+        public DbSet<Booking> Booking { get; set; }
         public DbSet<Comment> Comments { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=helloappdb;Trusted_Connection=True;");
+            //move to appsettings.json
         }
 
         public BookingContext(DbContextOptions<BookingContext> options) : base(options)

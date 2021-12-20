@@ -33,7 +33,7 @@ namespace iTechArtBooking.Web
             });
 
             services.AddDbContext<BookingContext>();
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<BookingContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<BookingContext>().AddDefaultTokenProviders();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,

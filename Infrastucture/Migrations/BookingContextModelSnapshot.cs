@@ -19,21 +19,21 @@ namespace Infrastucture.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Core.Models.Booked", b =>
+            modelBuilder.Entity("Core.Models.Booking", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<short>("Period")
-                        .HasColumnType("smallint");
 
                     b.Property<long?>("RoomId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("SatrtDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -44,7 +44,7 @@ namespace Infrastucture.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Booked");
+                    b.ToTable("Booking");
                 });
 
             modelBuilder.Entity("Core.Models.Comment", b =>
@@ -60,8 +60,8 @@ namespace Infrastucture.Migrations
                     b.Property<long?>("HotelId")
                         .HasColumnType("bigint");
 
-                    b.Property<short>("Mark")
-                        .HasColumnType("smallint");
+                    b.Property<byte>("Mark")
+                        .HasColumnType("tinyint");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -97,8 +97,8 @@ namespace Infrastucture.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("Cost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
 
                     b.Property<long?>("HotelId")
                         .HasColumnType("bigint");
@@ -173,14 +173,14 @@ namespace Infrastucture.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Core.Models.Booked", b =>
+            modelBuilder.Entity("Core.Models.Booking", b =>
                 {
                     b.HasOne("Core.Models.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId");
 
                     b.HasOne("Core.Models.User", "User")
-                        .WithMany("Booked")
+                        .WithMany("Booking")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Room");
@@ -219,7 +219,7 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
-                    b.Navigation("Booked");
+                    b.Navigation("Booking");
                 });
 #pragma warning restore 612, 618
         }

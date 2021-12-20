@@ -3,33 +3,34 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Infrastucture.Repositories
 {
     public class RoomRepository
     {
 
-        public static bool Add(int hotelId, string name, uint cost)
+        public async Task<HttpStatusCodeResult> Add(int hotelId, string name, uint cost)
         {
             using (var db = new BookingContext())
             {
-                var Hotel = db.Hotels.Where(h => h.Id == hotelId).Include(r => r.Rooms).First();
-                if (Hotel == null) return false;
+                var Hotel = await db.Hotels.Where(h => h.Id == hotelId).Include(r => r.Rooms).FirstAsync();
+                if (Hotel == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Not found"); ;
 
-                var Room = new Room() { Name = name, Hotel = Hotel, Cost = cost };
-                Hotel.Rooms.Add(Room);
+                Hotel.Rooms.Add(new Room() { Name = name, Hotel = Hotel, Cost = cost });
                // db.Rooms.Add(Room);
                 db.SaveChanges();
             }
-            return true;
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted, "Ok"); ;
         }
-        public static Room GetById(int id)
+        public async Task<Room> Get(int id)
         {
             using(var db = new BookingContext())
             {
-                var Room = db.Rooms.Where(r => r.Id == id).ToList();
+                var Room = await db.Rooms.Where(r => r.Id == id).ToListAsync();
                 if (Room.Count() == 0) return null; //Not Found;
                 else return Room[0];
             }

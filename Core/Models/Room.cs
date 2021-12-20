@@ -13,7 +13,7 @@ namespace Core.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public Hotel Hotel { get; set; }
-        public uint Cost { get; set; } //double
+        public Double Cost { get; set; } 
 
         //To ADD
         //Field with photo src

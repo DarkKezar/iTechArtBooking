@@ -13,23 +13,26 @@ using System.Web.Mvc;
 namespace iTechArtBooking.Web.Controllers
 {
     [Microsoft.AspNetCore.Authorization.Authorize]
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Components.Route("api/[controller]")]
     [Controller]
-    public class HotelController : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class BookingController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
-        private HotelRepository Repository;
+        private BookingRepository Repository;
 
-        public HotelController()
+        public BookingController()
         {
-            Repository = new HotelRepository();
+            Repository = new BookingRepository();
         }
 
-        //change bool to HttpCode
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<HttpStatusCodeResult> Add([Required]string name)
+        public async Task<HttpStatusCodeResult> Add([Required] int roomId, 
+                                                    [Required] int userId, 
+                                                    [Required] DateTime date, 
+                                                    [Required] Byte period)
         {
-            return await Repository.Add(name);
+            return await Repository.Add(roomId, userId, date, period);
         }
+
         [Microsoft.AspNetCore.Mvc.HttpDelete]
         public async Task<HttpStatusCodeResult> Delete([Required] int id)
         {
@@ -37,9 +40,9 @@ namespace iTechArtBooking.Web.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<Hotel> Get(int id = 1)
+        public async Task<List<Booking>> Get([Required]int userId)
         {
-            return await Repository.Get(id);
+            return await Repository.Get(userId);
         }
     }
 }

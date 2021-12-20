@@ -1,6 +1,7 @@
 ﻿using Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,12 +16,12 @@ namespace Infrastucture.Repositories
     public class UserRepository
     {
         
-        public static List<User> GetAll()
+        public async Task<List<User>> Get()
         {
             using(var db = new BookingContext())
             {
-                var Users = db.Users.ToList();
-                return Users;
+                var Users = db.Users.ToListAsync();
+                return await Users;
             }
         }
     }

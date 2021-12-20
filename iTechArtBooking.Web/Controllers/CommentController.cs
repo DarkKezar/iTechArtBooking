@@ -8,28 +8,36 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace iTechArtBooking.Web.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CommentController : ControllerBase
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Microsoft.AspNetCore.Components.Route("api/[controller]")]
+    [Controller]
+    public class CommentController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
 
-        [HttpPost]
-        public bool Add([Required] int hotelId, 
-                           [Required] int userId, 
-                           [Required] string comment, 
-                           [Required] SByte mark)
+        private CommentRepository Repository;
+
+        public CommentController()
         {
-            return CommentRepository.Add(hotelId, userId, comment, mark);
+            Repository = new CommentRepository();
         }
 
-        [HttpGet]
-        public List<Comment> Get([Required]int hotelId)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<HttpStatusCodeResult> Add([Required] int hotelId,
+                                                    [Required] int userId,
+                                                    [Required] string comment,
+                                                    [Required][Range(1,5)] Byte mark)
         {
-            return CommentRepository.GetAll(hotelId);
+            return await Repository.Add(hotelId, userId, comment, mark);
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public async Task<List<Comment>> Get([Required]int hotelId)
+        {
+            return await Repository.Get(hotelId);
         }
     }
 }
