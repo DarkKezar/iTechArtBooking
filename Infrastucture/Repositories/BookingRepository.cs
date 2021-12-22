@@ -12,31 +12,28 @@ namespace Infrastucture.Repositories
 {
     public class BookingRepository
     {
-        public async Task<HttpStatusCodeResult> Add(int roomId, int userId, DateTime date, Byte period)
+        public async Task<HttpStatusCodeResult> Add(int roomId, int userId, DateTime startDate, DateTime endDate)
         {
-            /*         using(var db = new BookingContext())
-                     {
-                         var User = db.Users.Where(b => b.Id == userId).ToList();
-                         var Room = db.Rooms.Where(b => b.Id == roomId).ToList();
+            using (var db = new BookingContext())
+            {
+                var User = await db.Users.Where(b => b.Id == userId).ToListAsync();
+                var Room = await db.Rooms.Where(b => b.Id == roomId).ToListAsync();
 
-                         if (User.Count() == 0 || Room.Count() == 0) return false;
-                         var AlreadyBooking = db.Booking
-                                                 .Where(b => b.StartDate >= date 
-                                                          && b.StartDate <= date.AddDays(period))
-                                                 .ToList();
-                         if (AlreadyBooking.Count() != 0) return false;
-                         var Booking = new Booking 
-                         { 
-                             Room = Room[0], 
-                             User = User[0], 
-                             SatrtDate = date, 
-                             EndDate = period 
-                         };
-
-                         db.Booking.Add(Booking);
-                         db.SaveChanges();
-                     }
-                     return true;*/
+                if (User.Count() == 0 || Room.Count() == 0) return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Not found such Room or User");
+                var AlreadyBooking = await db.Booking
+                                                 .Where(b => b.SatrtDate <= endDate
+                                                          && b.EndDate >= startDate)
+                                                 .ToListAsync();
+                if (AlreadyBooking.Count() != 0) return new HttpStatusCodeResult(HttpStatusCode.Accepted, "ok");
+                await db.Booking.AddAsync(new Booking()
+                {
+                    Room = Room[0],
+                    User = User[0],
+                    SatrtDate = startDate,
+                    EndDate = endDate
+                });
+                db.SaveChanges();
+            }
             return new HttpStatusCodeResult(HttpStatusCode.Accepted, "ok");
         }
         public async Task<HttpStatusCodeResult> Delete(int id)

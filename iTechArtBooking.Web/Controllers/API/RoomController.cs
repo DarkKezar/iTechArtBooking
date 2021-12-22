@@ -15,29 +15,23 @@ namespace iTechArtBooking.Web.Controllers
     [Microsoft.AspNetCore.Authorization.Authorize]
     [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [Controller]
-    public class HotelController : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class RoomController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
-        private HotelRepository Repository;
+        private RoomRepository Repository;
 
-        public HotelController()
+        public RoomController()
         {
-            Repository = new HotelRepository();
+            Repository = new RoomRepository();
         }
-
-        //change bool to HttpCode
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<HttpStatusCodeResult> Add([Required]string name)
+        public async Task<HttpStatusCodeResult> Add([Required]int hotelId, [Required]string name, uint cost)
         {
-            return await Repository.Add(name);
-        }
-        [Microsoft.AspNetCore.Mvc.HttpDelete]
-        public async Task<HttpStatusCodeResult> Delete([Required] int id)
-        {
-            return await Repository.Delete(id);
+            return await Repository.Add(hotelId, name, cost);
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<Hotel> Get(int id = 1)
+        public async Task<Room> Get([Required]int id)
         {
             return await Repository.Get(id);
         }

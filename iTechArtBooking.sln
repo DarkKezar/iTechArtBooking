@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArtBooking.Web", "iTechArtBooking.Web\iTechArtBooking.Web.csproj", "{9931D0A6-46A8-4356-80C4-4C5E7790DFE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArtBooking.Web", "iTechArtBooking.Web\iTechArtBooking.Web.csproj", "{9931D0A6-46A8-4356-80C4-4C5E7790DFE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{980E856D-9287-4D6D-BEAD-38CA1AEC7D76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{980E856D-9287-4D6D-BEAD-38CA1AEC7D76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastucture", "Infrastucture\Infrastucture.csproj", "{A2087389-1282-4DDC-8045-8BE18E8F45B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastucture", "Infrastucture\Infrastucture.csproj", "{A2087389-1282-4DDC-8045-8BE18E8F45B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

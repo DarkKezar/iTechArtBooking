@@ -14,8 +14,7 @@ namespace Core.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public List<Room> Rooms { get; set; }
-
-        //TO ADD:
-        //Some info fields 
+        public string Info { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }

@@ -13,26 +13,24 @@ using System.Web.Mvc;
 namespace iTechArtBooking.Web.Controllers
 {
     [Microsoft.AspNetCore.Authorization.Authorize]
-    [Microsoft.AspNetCore.Components.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [Controller]
-    public class BookingController : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class HotelController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
-        private BookingRepository Repository;
+        private HotelRepository Repository;
 
-        public BookingController()
+        public HotelController()
         {
-            Repository = new BookingRepository();
+            Repository = new HotelRepository();
         }
 
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<HttpStatusCodeResult> Add([Required] int roomId, 
-                                                    [Required] int userId, 
-                                                    [Required] DateTime date, 
-                                                    [Required] Byte period)
+        public async Task<HttpStatusCodeResult> Add([Required]string name)
         {
-            return await Repository.Add(roomId, userId, date, period);
+            return await Repository.Add(name);
         }
-
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         [Microsoft.AspNetCore.Mvc.HttpDelete]
         public async Task<HttpStatusCodeResult> Delete([Required] int id)
         {
@@ -40,9 +38,9 @@ namespace iTechArtBooking.Web.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<List<Booking>> Get([Required]int userId)
+        public async Task<Hotel> Get(int id = 1)
         {
-            return await Repository.Get(userId);
+            return await Repository.Get(id);
         }
     }
 }

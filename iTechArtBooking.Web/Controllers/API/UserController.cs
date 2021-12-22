@@ -20,7 +20,7 @@ namespace iTechArtBooking.Web.Controllers
         {
             Repository = new UserRepository();
         }
-
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<List<User>> Get()
         {

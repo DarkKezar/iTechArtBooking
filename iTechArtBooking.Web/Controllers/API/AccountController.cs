@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Core.Models;
 using Infrastucture.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +45,7 @@ namespace iTechArtBooking.Web.Controllers
                     id = user.Id
                 });
             }
-            return Unauthorized(new { Message = "Wrong email or password!!!" });
+            return Unauthorized(new { Message = "Wrong login or password!!!" });
         }
 
         [Route("sign-in")]
@@ -71,6 +70,7 @@ namespace iTechArtBooking.Web.Controllers
                             Message = "User creation failed!",
                             Errors = result.Errors
                         });
+            await _userManager.AddToRoleAsync(user, "user");
             return Ok(new
             {
                 Status = "Success",
