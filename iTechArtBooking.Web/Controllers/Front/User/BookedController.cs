@@ -8,6 +8,7 @@ namespace iTechArtBooking.Web.Controllers.Front
     [Controller]
     public class BookedController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View("booked");

@@ -8,6 +8,7 @@ namespace iTechArtBooking.Web.Controllers.Front
     [Controller]
     public class CatalogController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View("catalog");

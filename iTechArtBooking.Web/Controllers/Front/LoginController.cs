@@ -6,6 +6,7 @@ namespace iTechArtBooking.Web.Controllers.Front
     [Controller]
     public class LoginController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View("login");

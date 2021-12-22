@@ -36,10 +36,9 @@
     </header>
 
     <main>
-        <!--<form action="/api/" onsubmit="location = '/';">-->
-        <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
-            <input type="text" placeholder="Login" asp-for="UserName">
-            <input type="password" placeholder="Password" asp-for="Password">
+        <form method="post" action="/api/account/log-in">
+            <input type="text" placeholder="Login" name="UserName">
+            <input type="password" placeholder="Password" name="Password">
             <input type="submit" value="Войти">
         </form>
     </main>

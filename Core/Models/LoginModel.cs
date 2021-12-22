@@ -10,8 +10,8 @@ namespace Core.Models
     public class LoginModel 
     {
         [Required(ErrorMessage = "Не указан логин")]
-        public string UserName;
+        public string UserName { get; set; }
         [Required(ErrorMessage = "Не указан пароль")]
-        public string Password;
+        public string Password { get; set; }
     }
 }

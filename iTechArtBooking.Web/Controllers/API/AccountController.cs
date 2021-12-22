@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Core.Models;
+using IdentityModel;
 using Infrastucture.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace iTechArtBooking.Web.Controllers
 {
@@ -36,14 +39,23 @@ namespace iTechArtBooking.Web.Controllers
             {
                 var authClaims = new List<Claim>();
 
-                var token = new JwtSecurityToken(/*token data*/);
+                var now = DateTime.UtcNow;
+                // создаем JWT-токен
+                var jwt = new JwtSecurityToken(
+                        issuer: AuthOptions.ISSUER,
+                        audience: AuthOptions.AUDIENCE,
+                        notBefore: now,
+                        expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                return Ok(new
+                var response = new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo,
-                    id = user.Id
-                });
+                    access_token = encodedJwt,
+                    username = user.UserName
+                };
+
+                return Ok(new { access_token = encodedJwt, userName = user.UserName, Role = "user" });
             }
             return Unauthorized(new { Message = "Wrong login or password!!!" });
         }
