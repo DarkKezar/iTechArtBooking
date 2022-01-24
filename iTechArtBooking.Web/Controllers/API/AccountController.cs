@@ -32,33 +32,33 @@ namespace iTechArtBooking.Web.Controllers
         [Route("log-in")]
         [HttpPost]
         public async Task<IActionResult> Login([Required] LoginModel model)
-        {
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user != null &&
-                await _userManager.CheckPasswordAsync(user, model.Password))
-            {
-                var authClaims = new List<Claim>();
+         {
+             var user = await _userManager.FindByNameAsync(model.UserName);
+             if (user != null &&
+                 await _userManager.CheckPasswordAsync(user, model.Password))
+             {
+                 var authClaims = new List<Claim>();
 
-                var now = DateTime.UtcNow;
-                // создаем JWT-токен
-                var jwt = new JwtSecurityToken(
-                        issuer: AuthOptions.ISSUER,
-                        audience: AuthOptions.AUDIENCE,
-                        notBefore: now,
-                        expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+                 var now = DateTime.UtcNow;
+                 // создаем JWT-токен
+                 var jwt = new JwtSecurityToken(
+                         issuer: AuthOptions.ISSUER,
+                         audience: AuthOptions.AUDIENCE,
+                         notBefore: now,
+                         expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                         signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                var response = new
-                {
-                    access_token = encodedJwt,
-                    username = user.UserName
-                };
+                 var response = new
+                 {
+                     access_token = encodedJwt,
+                     username = user.UserName
+                 };
 
-                return Ok(new { access_token = encodedJwt, userName = user.UserName, Role = "user" });
-            }
-            return Unauthorized(new { Message = "Wrong login or password!!!" });
-        }
+                 return Ok(new { access_token = encodedJwt, userName = user.UserName, Role = "user" });
+             }
+             return Unauthorized(new { Message = "Wrong login or password!!!" });
+         }
 
         [Route("sign-in")]
         [HttpPost]

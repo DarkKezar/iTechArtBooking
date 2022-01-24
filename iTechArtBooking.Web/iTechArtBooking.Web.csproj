@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\_Layout.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
@@ -34,17 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Front\Admin\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\Content\img\github.png" />
     <None Include="wwwroot\Content\img\google-drive.png" />
     <None Include="wwwroot\Content\main.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
 
 </Project>
